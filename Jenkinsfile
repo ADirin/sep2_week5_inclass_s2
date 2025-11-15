@@ -30,7 +30,7 @@ pipeline {
         stage('SonarQube Analysis') {
                     steps {
                         withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
-                            sh """
+                            bat """
                                 /usr/local/sonarscanner/bin/sonar-scanner \
                                 -Dsonar.projectKey=LectureDemo_SonarQube \
                                 -Dsonar.sources=src \
