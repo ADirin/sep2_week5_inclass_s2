@@ -28,20 +28,20 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                    bat """
-                        /usr/local/sonarscanner/bin/sonar-scanner \
-                        -Dsonar.projectKey=devops-demo ^
-                        -Dsonar.sources=src ^
-                        -Dsonar.projectName=DevOps-Demo ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.login=${env.SONAR_TOKEN} ^
-                        -Dsonar.java.binaries=target/classes
-                    """
+                    steps {
+                        withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
+                            sh """
+                                /usr/local/sonarscanner/bin/sonar-scanner \
+                                -Dsonar.projectKey=LectureDemo_SonarQube \
+                                -Dsonar.sources=src \
+                                -Dsonar.projectName=LectureDemo_SonarQube \
+                                -Dsonar.host.url=http://localhost:9000 \
+                                -Dsonar.token=${env.SONAR_TOKEN} \
+                                -Dsonar.java.binaries=target/classes \
+                            """
+                        }
+                    }
                 }
-            }
-        }
 
         stage('Build Docker Image') {
                     steps {
